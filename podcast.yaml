@@ -1,0 +1,43 @@
+title: R Weekly Highlights
+description: The R Weekly podcast offers a quick description of the latest highlighted stories and other stories from the latest [R Weekly](https://rweekly.org) issue, as curated by the R Weekly team and R community.
+link: https://podcast.rweekly.org
+language: "en-US"
+medium: podcast
+license: "cc-by-4,0"
+locked:
+  owner: "theRcast@gmail.com"
+  status: no
+funding:
+  url: "https://example.com/donations"
+  description: "Become a member!"
+explicit: no
+type: episodic
+category:
+  primary: Science
+  secondary: null
+authors:
+  - name: Eric Nantz
+    email: theRcast@gmail.com
+owner:
+  name: Eric Nants
+  email: theRcast@gmail.com
+image: https://example.com/images/pci_avatar-massive.jpg
+value:
+  type: lightning
+  method: keysend
+  suggested: "0.00000005000"
+  recipients:
+    - name: Podcaster 1
+      type: node
+      address: 036557ea56b3b86f08be31bcd2557cae8021b0e3a9413f0c0e52625c6696972e57
+      split: 99
+    - name: Hosting Company
+      type: node
+      address: 036557ea56b3b86f08be31bcd2557cae8021b0e3a9413f0c0e52625c6696972e57
+      split: 1
+trailer:
+  pubdate: "Thu, 01 Apr 2021 08:00:00 EST"
+  url: "https://example.org/trailers/teaser"
+  length: 12345678
+  type: "audio/mp3"
+  description: "Coming April 1st, 2021"

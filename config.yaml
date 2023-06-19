@@ -1,0 +1,129 @@
+baseurl: https://example.com/
+languageCode: en-us
+title: R Weekly Highlights
+theme: castanet
+googleAnalytics: ''
+paginate: '9'
+buildFuture: yes
+taxonomies:
+  category: categories
+  series: series
+  tag: tags
+permalinks:
+  about: /:filename/
+  episode: /:filename/
+Menu:
+  Main:
+    - identifier: about
+      name: About
+      url: /about
+    - identifier: contact
+      name: Contact
+      url: /contact
+    - identifier: hosts
+      name: Hosts
+      url: /host
+    - identifier: guests
+      name: Guests
+      url: /guest
+    - identifier: upcoming
+      name: Upcoming Episodes
+      url: /upcoming
+    - identifier: blog
+      name: Blog
+      url: /blog
+    - identifier: resources
+      name: Resources
+      url: '#!'
+    - identifier: books
+      name: Books
+      parent: resources
+      url: /books
+    - identifier: podcasts
+      name: Podcasts
+      parent: resources
+      url: /books
+    - identifier: internet
+      name: Internet
+      url: https://www.google.com
+params:
+  authors:
+    Eric:
+      bio: ''
+      name: Eric Nantz
+      social:
+        twitter: theRcast
+        linkedin: eric-nantz
+        github: rpodcast
+        twitch: rpodcast
+        youtube: shinydeveloperseries
+        mastodon: https://podcastindex.social/@rpodcast
+      thumbnail: img/host/eric.png
+    Mike:
+      bio: ''
+      name: Mike Thomas
+      social:
+        twitter: mike_ketchbrook
+        linkedin: michaeljthomas2
+        github: ketchbrookanalytics
+        mastodon: https://fosstodon.org/@mike_thomas
+      thumbnail: img/host/mike.jpeg
+  copyright_notice: Copyright 2023 [Eric Nantz](https:r-podcast.org)
+  description: The R Weekly podcast offers a quick description of the latest highlighted stories and other stories from the latest [R Weekly](https://rweekly.org) issue, as curated by the R Weekly team and R community.
+  disable_title_caps: 'true'
+  disqusShortname: ''
+  enable_jumbo: 'true'
+  episode_number_prefix: CWC
+  episode_number_style: brackets
+  feed:
+    copyright: Copyright 2020 Matt Stratton
+    itunes_author: Matt Stratton
+    itunes_first_sub_category: Software How-To
+    itunes_image: https://www.arresteddevops.com/img/ado-podcast-logo.png
+    itunes_owner_email: matt.stratton@gmail.com
+    itunes_owner_name: Matt Stratton
+    itunes_second_sub_category: Tech News
+    itunes_subtitle: The best podcast ever
+    itunes_summary: The HugoCast is the best podcast you've ever seen. You will learn
+      everything you ever needed to know about podcasting from the most inspiring
+      experts to ever show up on the whole internet.
+    itunes_top_category: Technology
+    language: en-us
+  google_play_subscribe: https://podcasts.google.com/feed/aHR0cHM6Ly93d3cuYXJyZXN0ZWRkZXZvcHMuY29tL2VwaXNvZGUvaW5kZXgueG1s
+  googleAnalytics_UA: ''
+  itunes_subscribe: https://podcasts.apple.com/us/podcast/arrested-devops/id773888088?ign-mpt=uo%3D4&mt=2
+  links:
+    ado:
+      name: Arrested DevOps
+      url: https://www.arresteddevops.com
+  mainSections: episode
+  media_prefix: https://media.blubrry.com/arresteddevops/content.blubrry.com/arresteddevops/
+  podlove:
+    subscribe_color: '#585e6c'
+    subscribe_cover: img/logo.jpg
+    subscribe_description: ''
+    subscribe_feed_format: mp3
+    subscribe_feed_type: audio
+    subscribe_format: rectangle
+    subscribe_language: de
+    subscribe_size: medium
+    subscribe_style: filled
+    subscribe_subtitle: ''
+    subscribe_title: ''
+  realfavicongenerator:
+    mask_icon_color: '#5bbad5'
+    msapplication_tilecolor: '#2b5797'
+    theme_color: '#ffffff'
+  show_next_upcoming: 'true'
+  site_layout: row
+  site_theme: blue
+  social:
+    github: rweekly
+    mastodon: https://fosstodon.org/@rweekly
+    twitter: https://twitter.com/rweekly_org
+    twitter_domain: rweekly.org
+
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
