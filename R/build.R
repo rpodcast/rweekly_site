@@ -6,7 +6,7 @@ message("running in build.R")
 # - use a YAML to store overall podcast-related RSS parameters
 # - import the config file with yaml::read_yaml("config.yaml:") and subset to grab only the parameters I need
 
-podcast_meta <- yaml::read_yaml("podcast.yaml")
+#podcast_meta <- yaml::read_yaml("podcast.yaml")
 
 
 # - use the yaml frontmatter of each episode markdown file to store episode-specific RSS parameters

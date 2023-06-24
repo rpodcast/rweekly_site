@@ -1,4 +1,4 @@
-baseurl: https://example.com/
+baseurl: https://podcast.rweekly.org
 languageCode: en-us
 title: R Weekly Highlights
 theme: castanet
@@ -23,26 +23,9 @@ Menu:
     - identifier: hosts
       name: Hosts
       url: /host
-    - identifier: guests
-      name: Guests
-      url: /guest
-    - identifier: upcoming
-      name: Upcoming Episodes
-      url: /upcoming
     - identifier: blog
       name: Blog
       url: /blog
-    - identifier: resources
-      name: Resources
-      url: '#!'
-    - identifier: books
-      name: Books
-      parent: resources
-      url: /books
-    - identifier: podcasts
-      name: Podcasts
-      parent: resources
-      url: /books
     - identifier: internet
       name: Internet
       url: https://www.google.com
@@ -73,22 +56,38 @@ params:
   disable_title_caps: 'true'
   disqusShortname: ''
   enable_jumbo: 'true'
-  episode_number_prefix: CWC
-  episode_number_style: brackets
   feed:
-    copyright: Copyright 2020 Matt Stratton
-    itunes_author: Matt Stratton
+    copyright: Copyright 2023 Eric Nantz
+    itunes_author: Eric Nantz
     itunes_first_sub_category: Software How-To
     itunes_image: https://www.arresteddevops.com/img/ado-podcast-logo.png
-    itunes_owner_email: matt.stratton@gmail.com
-    itunes_owner_name: Matt Stratton
+    itunes_owner_email: theRcast@gmail.com
+    itunes_owner_name: Eric Nantz
     itunes_second_sub_category: Tech News
     itunes_subtitle: The best podcast ever
-    itunes_summary: The HugoCast is the best podcast you've ever seen. You will learn
-      everything you ever needed to know about podcasting from the most inspiring
-      experts to ever show up on the whole internet.
+    itunes_summary: The R Weekly podcast offers a quick description of the latest highlighted stories and other stories from the latest R Weekly issue, as curated by the R Weekly team and R community.
     itunes_top_category: Technology
     language: en-us
+    explicit: no
+    feed_url: https://feed.url.pleacechangement.com
+    guid: "bb28afcc-137e-5c66-b231-4ffad7979b44"
+    license: 
+      name: Name of License
+      url: https://pleasechangeme.com
+    funding:
+      text: My funding text
+      url: https://funding.pleasechangeme.com
+    value:
+      type: lightning
+      method: keysend
+      suggested: '0.0000005000'
+      recipients:
+      - name: rpodcast@getalby.com
+        type: node
+        address: 030a58b8653d32b99200a2334cfe913e51dc7d155aa0116c176657a4f1722677a3
+        customKey: '696969'
+        customValue: 0El4ZrgMqGemTCECGkUG
+        split: '100'
   google_play_subscribe: https://podcasts.google.com/feed/aHR0cHM6Ly93d3cuYXJyZXN0ZWRkZXZvcHMuY29tL2VwaXNvZGUvaW5kZXgueG1s
   googleAnalytics_UA: ''
   itunes_subscribe: https://podcasts.apple.com/us/podcast/arrested-devops/id773888088?ign-mpt=uo%3D4&mt=2

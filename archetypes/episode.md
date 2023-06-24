@@ -11,13 +11,22 @@ hosts: [enantz, mthomas]
 aliases: ["/##"]
 youtube: ""
 explicit: no
+podcast_chapters:
+  version: 1.1.0
+  chapters:
+    - startTime: 0
+      title: "Intro"
+    - startTime: 180
+      title: "Example Chapter"
 value:
   type: lightning
   method: keysend
   suggested: "0.00000005000"
   recipients:
-    - name: Eric Nantz
+    - name: rpodcast@getalby.com
       type: node
       address: 030a58b8653d32b99200a2334cfe913e51dc7d155aa0116c176657a4f1722677a3
-
+      customKey: 696969
+      customValue: 0El4ZrgMqGemTCECGkUG
+      split: 100
 ---
