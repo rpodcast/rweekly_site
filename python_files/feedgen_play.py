@@ -11,11 +11,11 @@ from lxml import etree
 
 # experiment with deriving podcast media info
 media_obj = Media(
-    url = "https://path/to/rwh124.mp3",
+    url = "https://path/to/rwh100.mp3",
     type = "audio/mpeg"
 )
 
-media_obj.populate_duration_from("python_files/rwh124.mp3")
+media_obj.populate_duration_from("/rweekly_media/rwh100.mp3")
 
 print(media_obj)
 

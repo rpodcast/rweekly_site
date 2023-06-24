@@ -5,6 +5,8 @@ datetime <- import("datetime", convert = FALSE)
 dateutil.tz <- import("dateutil.tz")
 pytz <- import("pytz")
 
+tinytag <- import("tinytag")
+
 # initialize the feed
 p <- pod2gen$Podcast()
 p$name <- "Testfeed"

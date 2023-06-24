@@ -17,10 +17,15 @@ box::use(./R/rss_process/core)
 
 box::reload(core)
 
-core$parse_publish_date("2023-06-21T01:45:00-04:00")
+#core$parse_media_info("/rweekly_media/rwh100.mp3")
+#core$parse_publish_date("2023-06-21T01:45:00-04:00")
 
-core$import_episode_metadata("content/episode/0125.md")
+#core$import_episode_metadata("content/episode/0125.md")
 
-core$import_podcast_metadata("config.yaml")
-
+podcast_metadata <- core$import_podcast_metadata("config.yaml")
 episode_list <- core$import_all_episodes()
+core$gen_podcast_rss(
+  podcast_metadata = podcast_metadata,
+  episode_metadata = episode_list[1:10]
+)
+
