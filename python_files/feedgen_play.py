@@ -9,6 +9,16 @@ from dateutil import tz
 
 from lxml import etree
 
+# experiment with deriving podcast media info
+media_obj = Media(
+    url = "https://path/to/rwh124.mp3",
+    type = "audio/mpeg"
+)
+
+media_obj.populate_duration_from("python_files/rwh124.mp3")
+
+print(media_obj)
+
 # Initialize the feed
 p = Podcast()
 p.name = "Testfeed"

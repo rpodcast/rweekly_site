@@ -16,6 +16,9 @@ driver$create_episodes(1:10)
 box::use(./R/rss_process/core)
 
 box::reload(core)
+
+core$parse_publish_date("2023-06-21T01:45:00-04:00")
+
 core$import_episode_metadata("content/episode/0125.md")
 
 core$import_podcast_metadata("config.yaml")

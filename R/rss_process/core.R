@@ -11,7 +11,22 @@
 #' @return list with invidual components
 #' @export
 parse_publish_date <- function(publish_date) {
-  
+  box::use(lubridate[...])
+
+  # convert to date-time object
+  x <- ymd_hms(publish_date)
+
+  # extract individual components into a list
+  x2 <- list(
+    year = as.integer(year(x)),
+    month = as.integer(month(x)),
+    day = as.integer(mday(x)),
+    hour = as.integer(hour(x)),
+    minute = as.integer(minute(x)),
+    second = as.integer(second(x))
+  )
+
+  return(x2)
 }
 
 #' import yaml metadata from episode file
@@ -129,7 +144,7 @@ gen_podcast_rss <- function(podcast_metadata, episode_metadata, output_file = "R
       )
     }))
 
-    p_category <- pod2gen$Category(p_meta$category)
+  p_category <- pod2gen$Category(p_meta$category)
     # recipients = list(
     #   pod2gen$Recipient(
     #     name = "Test Person",
@@ -157,14 +172,24 @@ gen_podcast_rss <- function(podcast_metadata, episode_metadata, output_file = "R
   p$add_funding(p_funding)
 
   # TODO: Debugging episode constructs, will loop it later
-  # - use a date time package in R to parse out components of date string in params
   ep_sub <- episode_metadata[[1]]
 
-  ep_obj <- pod2gen$Episode(
-    title = ep_obj$title
+  # grab publish date and translate into components
+  ep_date <- parse_publish_date(ep_sub$date)
+  ep_date_object <- datetime$datetime(
+    ep_date$year,
+    ep_date$month,
+    ep_date$day,
+    ep_date$hour,
+    ep_date$minute,
+    ep_date$second,
+    tzinfo = datetime$timezone$utc
   )
 
-
-
+  ep_obj <- pod2gen$Episode(
+    title = ep_obj$title,
+    summary = ep_obj$description,
+    publication_date = ep_date_object
+  )
 
 }
