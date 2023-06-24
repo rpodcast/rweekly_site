@@ -5,6 +5,9 @@
 	"build": {
         "dockerfile": "Dockerfile"
   },
+	"mounts": [
+		"source=/media/media_drive1/audio/reaper_renders,target=/rweekly_media,type=bind,consistency=cached"
+	],
 	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
 	//"image": "ghcr.io/rocker-org/devcontainer/r-ver:4.3",
 	"features": {
