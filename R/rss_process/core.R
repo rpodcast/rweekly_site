@@ -105,16 +105,20 @@ import_podcast_metadata <- function(file) {
 
 #' Import all episode metadata
 #' @param input_dir full path to directory with episode markdown files
+#' @param reverse_order flag to reverse order of items. This is typically
+#'   required for pocdast RSS feeds to have items from latest to earliest
 #' @name core
 #' @return list of all episode metadata
 #' @export
-import_all_episodes <- function(input_dir = "content/episode") {
+import_all_episodes <- function(input_dir = "content/episode", reverse_order = TRUE) {
   box::use(purrr[map])
   # list all episode files
   episode_files <- list.files(path = input_dir, full.names = TRUE)
 
   # use purrr map to import all episode metadata
   episode_list <- map(episode_files, ~import_episode_metadata(.x))
+
+  if (reverse_order) episode_list <- rev(episode_list)
   return(episode_list)
 }
 
