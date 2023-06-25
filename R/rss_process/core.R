@@ -112,13 +112,15 @@ import_podcast_metadata <- function(file) {
 #' @return list of all episode metadata
 #' @export
 import_all_episodes <- function(input_dir = "content/episode", reverse_order = TRUE) {
-  box::use(purrr[map])
+  box::use(purrr[map, map_chr])
   # list all episode files
   episode_files <- list.files(path = input_dir, full.names = TRUE)
 
   # use purrr map to import all episode metadata
   episode_list <- map(episode_files, ~import_episode_metadata(.x))
-
+  names(episode_list) <- purrr::map_chr(episode_list, ~{
+    as.character(.x$episode)
+  })
   if (reverse_order) episode_list <- rev(episode_list)
   return(episode_list)
 }
