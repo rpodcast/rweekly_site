@@ -83,6 +83,7 @@ import_podcast_metadata <- function(file) {
     description = x$params$description,
     language = x$params$feed$language,
     title = x$title,
+    subtitle = x$params$feed$itunes_subtitle,
     website = x$baseurl,
     explicit = x$params$feed$explicit,
     copyright = x$params$feed$copyright,
@@ -248,6 +249,7 @@ gen_podcast_rss <- function(
 
     ep_obj <- pod2gen$Episode(
       title = ep_sub$title,
+      subtitle = ep_sub$description,
       summary = ep_sub$description,
       episode_number = ep_sub$episode,
       publication_date = ep_date_object,

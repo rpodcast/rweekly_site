@@ -60,13 +60,13 @@ params:
     copyright: Copyright 2023 Eric Nantz
     itunes_author: Eric Nantz
     itunes_first_sub_category: Software How-To
-    itunes_image: https://www.arresteddevops.com/img/ado-podcast-logo.png
+    itunes_image: https://rweekly-highlights.nyc3.cdn.digitaloceanspaces.com/media/img/rweekly_cover.jpg
     itunes_owner_email: theRcast@gmail.com
     itunes_owner_name: Eric Nantz
     itunes_second_sub_category: Tech News
-    itunes_subtitle: The best podcast ever
+    itunes_subtitle: Audio summary of R community highlights and more from the latest R Weekly issue
     itunes_summary: The R Weekly podcast offers a quick description of the latest highlighted stories and other stories from the latest R Weekly issue, as curated by the R Weekly team and R community.
-    itunes_top_category: Technology
+    itunes_top_category: Science
     language: en-us
     explicit: no
     feed_url: https://feed.url.pleacechangement.com
