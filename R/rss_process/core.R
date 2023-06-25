@@ -130,6 +130,7 @@ import_all_episodes <- function(input_dir = "content/episode", reverse_order = T
 #' @param episode_metadata list of episode metadata
 #' @param local_media_path local directory of podcast media files
 #' @param output_file full path to output feed xml file
+#' @param verbose flag to show verbose output when adding episodes to feed
 #' @name core
 #' @return invisible output_file path
 #' @export
@@ -137,7 +138,8 @@ gen_podcast_rss <- function(
   podcast_metadata, 
   episode_metadata, 
   local_media_path = "/rweekly_media",
-  output_file = "R/feed.xml") {
+  output_file = "R/feed.xml",
+  verbose = FALSE) {
   # import package dependencies
   box::use(reticulate[...])
   box::use(purrr[map, walk])
@@ -213,7 +215,7 @@ gen_podcast_rss <- function(
   # TODO: Debugging episode constructs, will loop it later
   walk(episode_metadata, ~{
     ep_sub <- .x
-    
+    if (verbose) message(ep_sub$episode)
     # grab publish date and translate into components
     ep_date <- parse_publish_date(ep_sub$date)
     ep_date_object <- datetime$datetime(
