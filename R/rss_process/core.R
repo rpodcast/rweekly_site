@@ -259,55 +259,6 @@ gen_podcast_rss <- function(
     p$add_episode(ep_obj)
   })
 
-  # ep_sub <- episode_metadata[[1]]
-
-  # # grab publish date and translate into components
-  # ep_date <- parse_publish_date(ep_sub$date)
-  # ep_date_object <- datetime$datetime(
-  #   ep_date$year,
-  #   ep_date$month,
-  #   ep_date$day,
-  #   ep_date$hour,
-  #   ep_date$minute,
-  #   ep_date$second,
-  #   tzinfo = datetime$timezone$utc
-  # )
-
-  # ep_media_info <- parse_media_info(file.path(local_media_path, ep_sub$podcast_file))
-  # ep_media_obj <- pod2gen$Media(
-  #   url = ep_media_info$url,
-  #   size = ep_media_info$size,
-  #   type = ep_media_info$type,
-  #   duration = datetime$timedelta(ep_media_info$duration)
-  # )
-
-  # ep_value_obj <- pod2gen$Value(
-  #   value_type = ep_sub$value$type,
-  #   method = ep_sub$value$method,
-  #   suggested = ep_sub$value$suggested,
-  #   recipients = map(ep_sub$value$recipients, ~{
-  #     pod2gen$Recipient(
-  #       name = .x$name,
-  #       address_type = .x$type,
-  #       address = .x$address,
-  #       #customKey = .x$customKey,
-  #       #customValue = .x$customValue,
-  #       split = .x$split
-  #     )
-  #   }))
-
-  # ep_obj <- pod2gen$Episode(
-  #   title = ep_sub$title,
-  #   summary = ep_sub$description,
-  #   episode_number = ep_sub$episode,
-  #   publication_date = ep_date_object,
-  #   media = ep_media_obj,
-  #   value = ep_value_obj
-  # )
-
-  # # add episode to podcast object
-  # p$add_episode(ep_obj)
-
   # create RSS file
   p$rss_file(output_file)
 }
