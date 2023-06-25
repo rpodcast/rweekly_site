@@ -26,6 +26,5 @@ podcast_metadata <- core$import_podcast_metadata("config.yaml")
 episode_list <- core$import_all_episodes()
 core$gen_podcast_rss(
   podcast_metadata = podcast_metadata,
-  episode_metadata = episode_list[1:10]
+  episode_metadata = episode_list
 )
-
