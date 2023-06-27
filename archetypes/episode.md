@@ -3,11 +3,13 @@ title: ""
 description: ""
 date: {{ .Date }}
 podcast_file: "###.mp3" # the name of the podcast file, after the media prefix.
-podcast_duration: ""
+podcast_duration: "00:00"
 podcast_bytes: ""
 episode_image: "img/episode/default.jpg"
 images: ["img/episode/default-social.jpg"]
-hosts: [enantz, mthomas]
+hosts: 
+- enantz
+- mthomas
 aliases: ["/##"]
 youtube: ""
 explicit: no
