@@ -5,6 +5,67 @@
 #' generating the RSS feed of the podcast istelf
 '.__module__'
 
+#' establish connection to podcast S3 bucket
+#' @param endpoint_url URL of S3 endpoint
+#' @return connection object
+#' @export
+bucket_connect <- function(endpoint_url = "https://nyc3.digitaloceanspaces.com") {
+  # declare dependencies
+  box::use(botor[botor_client])
+  x <- botor_client(
+    service = "s3",
+    type = "client",
+    region_name = "nyc3",
+    endpoint_url = 'https://nyc3.digitaloceanspaces.com',
+    aws_access_key_id = Sys.getenv("AWS_ACCESS_KEY_ID"),
+    aws_secret_access_key = Sys.getenv("AWS_SECRET_ACCESS_KEY")
+  )
+  return(x)
+}
+
+#' upload file to S3 bucket
+#' @param con connection object for S3 bucket
+#' @param file full path to local file to upload
+#' @param destination location in bucket to use for upload key
+#' @param bucket string for bucket name
+#' @param set_public flag to enable public access for bucket file
+#' @return invisible result of upload
+#' @export
+bucket_upload_file <- function(
+  con,
+  file,
+  destination,
+  bucket = "rweekly-highlights",
+  set_public = TRUE) {
+    box::use(botor[...])
+
+    if (!file.exists(file)) stop("Specified local file does not exist", call. = FALSE)
+
+    if (set_public) {
+      public_string <- list(ACL = "public-read")
+    } else {
+      public_string <- NULL
+    }
+    con$upload_file(file, bucket, destination, ExtraArgs = public_string)
+}
+
+#' download file from S3 bucket
+#' @param con connection object for S3 bucket
+#' @param object_name location of file in S3 bucket
+#' @param destination_file full path to local copy of file
+#' @param bucket string for bucket name
+#' @return invisible local destination file path
+#' @export
+bucket_download_file <- function(
+  con,
+  object_name,
+  destination_file,
+  bucket = "rweekly-highlights") {
+    box::use(botor[...])
+
+    con$download_file(bucket, object_name, destination_file)
+}
+
 #' parse publish date into separate components
 #' @param publish_date string of publish date
 #' @name core
@@ -28,6 +89,17 @@ parse_publish_date <- function(publish_date) {
   )
 
   return(x2)
+}
+
+#' convert hms notation into total seconds
+#' @param timestamp string of time in hours:minutes:seconds notation
+#' @return total number of seconds as integer
+#' @export
+hms_convert <- function(timestamp) {
+  box::use(lubridate[hms, period_to_seconds])
+
+  x <- period_to_seconds(hms(timestamp))
+  return(x)
 }
 
 #' parse episode media file attributes
@@ -56,6 +128,29 @@ parse_media_info <- function(file, url_prefix = "https://rweekly-highlights.nyc3
   )
 }
 
+#' parse episode shownotes from markdown file
+#' @param file full path to episode markdown file
+#' @name core
+#' @return character vector of HTML lines
+#' @export
+parse_episode_shownotes <- function(file) {
+  box::use(markdown[mark])
+  box::use(withr[with_tempfile])
+  box::use(readr[read_lines, read_file])
+
+  lines <- read_lines(file)
+  yaml_delim <- grep("^---", lines)
+  if (length(yaml_delim) > 1) {
+    lines <- lines[(yaml_delim[2] + 1):length(lines)]
+  }
+  
+  with_tempfile("tf", {
+    mark(text = lines, output = tf)
+    read_file(tf)
+  })
+  #mark(text = lines)
+}
+
 #' import yaml metadata from episode file
 #' @param file full path to episode markdown file
 #' @name core
@@ -65,7 +160,40 @@ import_episode_metadata <- function(file) {
   box::use(rmarkdown[yaml_front_matter])
 
   x <- yaml_front_matter(file)
+  # append shownotes as another element
+  x$shownotes <- parse_episode_shownotes(file)
+
+  # construct link
+  x$link <- paste0("https://podcast.rweekly.org/", x$episode)
   return(x)
+}
+
+#' Create podcast episode JSON file with chapter information
+#' @param episode_metadata list of podcast episode metadata from yaml of markdown file
+#' @param upload_to_s3 flag to upload chapters JSON file to s3 bucket. If false, 
+#'   chapters file will be stored locally
+#' @param bucket string of bucket name
+#' @return invisible
+#' @export
+create_chapters_json <- function(episode_metadata, upload_to_s3 = TRUE, bucket = "rweekly-highlights") {
+  box::use(purrr[map])
+  box::use(jsonlite[toJSON])
+  box::use(stringr[str_detect])
+
+  # exit function if podcast_chapters yaml field does not exist
+  if (!"podcast_chapters" %in% names(episode_metadata)) {
+    message("no chapters declared. Exiting function")
+    return(NULL)
+  }
+
+  # if chapters are writting in HMS notation, convert them to total seconds
+  x <- episode_metadata$podcast_chapters$chapters
+  episode_metadata$podcast_chapters$chapters <- map(x, ~{
+    if (str_detect(.x$startTime, ":")) {
+      .x$startTime <- hms_convert(.x$startTime)
+    }
+    return(.x)
+  })
 }
 
 #' import podcast metadata from blogdown config file
@@ -130,6 +258,9 @@ import_all_episodes <- function(input_dir = "content/episode", reverse_order = T
 #' @param episode_metadata list of episode metadata
 #' @param local_media_path local directory of podcast media files
 #' @param output_file full path to output feed xml file
+#' @param publish_feed flag to indicate whether to publish RSS file 
+#'   to S3 bucket
+#' @param bucket Name of S3 bucket
 #' @param verbose flag to show verbose output when adding episodes to feed
 #' @name core
 #' @return invisible output_file path
@@ -139,6 +270,8 @@ gen_podcast_rss <- function(
   episode_metadata, 
   local_media_path = "/rweekly_media",
   output_file = "R/feed.xml",
+  publish_feed = TRUE,
+  bucket = "rweekly-highlights",
   verbose = FALSE) {
   # import package dependencies
   box::use(reticulate[...])
@@ -203,6 +336,7 @@ gen_podcast_rss <- function(
     feed_url = p_meta$feed_url,
     explicit = p_meta$explicit,
     license = p_license,
+    image = p_meta$image,
     complete = FALSE,
     owner = p_owner,
     locked = FALSE,
@@ -254,7 +388,9 @@ gen_podcast_rss <- function(
     ep_obj <- pod2gen$Episode(
       title = ep_sub$title,
       subtitle = ep_sub$description,
-      summary = ep_sub$description,
+      summary = ep_sub$shownotes,
+      long_summary = ep_sub$shownotes,
+      link = ep_sub$link,
       episode_number = ep_sub$episode,
       publication_date = ep_date_object,
       media = ep_media_obj,
@@ -265,6 +401,15 @@ gen_podcast_rss <- function(
     p$add_episode(ep_obj)
   })
 
-  # create RSS file
+  # create local RSS file
   p$rss_file(output_file)
+
+  # publish feed to s3 bucket if requested
+  if (publish_feed) {
+    bucket_upload_file(
+      con = bucket_connect(),
+      file = output_file,
+      destination = paste0("rss/", basename(output_file))
+    )
+  }
 }

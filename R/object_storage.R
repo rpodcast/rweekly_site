@@ -69,7 +69,13 @@ s3 <- boto3$resource(
 )
 
 library(reticulate)
-obj <- s3$Object(bucket_name = "rpodcast-testing", key = "rpodcast_newlogo_itunes.png")
+bucket <- s3$Bucket("rweekly-highlights")
+objects <- bucket$objects
+feed_object <- objects$filter(Prefix = "rss/feed.xml")
+feed_object$key
+
+obj <- s3$Object(bucket_name = "rpodcast-testing", key = "rss/feed.xml")
+obj2 <- s3$Object
 obj$key
 obj$bucket_name
 

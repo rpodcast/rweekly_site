@@ -41,6 +41,9 @@ import_fireside_json <- function(file, process = TRUE) {
     # change mp3 file to my version on S3 bucket
     x$podcast_file <- paste0("rwh", str_pad(x$episode, width = 3, pad = "0"), ".mp3")
 
+    # add alias based on episode number
+    x$aliases <- paste0("/", x$episode)
+
     # add value block data
     x$value <- list(
       type = "lightning",
@@ -73,7 +76,8 @@ import_fireside_shownotes <- function(input_file, output_file) {
   pandoc_convert(
     file.path(getwd(), input_file),
     to = "markdown_strict",
-    output = output_file
+    output = output_file,
+    options = c("--wrap=none")
   )
   invisible(output_file)
 }
@@ -94,6 +98,7 @@ create_episode_post <- function(
   box::use(stringr[str_pad])
   box::use(ymlthis[as_yml, use_yml_file, use_rmarkdown])
   box::use(withr[with_tempfile])
+  box::use(readr[read_lines])
 
   # fireside metadata files have 4 digits for episode number
   fireside_episode <- str_pad(episode, width = 4, pad = "0")
@@ -116,7 +121,7 @@ create_episode_post <- function(
     use_rmarkdown(
       post_yaml,
       output_file,
-      body = readLines(tf),
+      body = read_lines(tf),
       open_doc = FALSE,
       overwrite = TRUE
     )
